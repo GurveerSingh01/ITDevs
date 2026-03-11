@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>DO NOT CLICK 🚨</title>
+  <link href="https://fonts.googleapis.com/css2?family=Boogaloo&family=Fredoka+One&family=Nunito:wght@400;700;900&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --pink: #ff3eb5;
+      --yellow: #ffe600;
+      --cyan: #00f0ff;
+      --orange: #ff6a00;
+      --green: #39ff14;
+      --purple: #bf00ff;
+      --red: #ff2020;
+    }
+
+    html, body {
+      min-height: 100vh;
+      overflow-x: hidden;
+      font-family: 'Nunito', sans-serif;
+      cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Ctext y='26' font-size='26'%3E%F0%9F%98%88%3C/text%3E%3C/svg%3E") 16 16, auto;
+    }
+
+    body { background: #0a0a0a; position: relative; }
+
+    .bg-layer {
+      position: fixed; inset: 0; z-index: 0; overflow: hidden;
+    }
+    .bg-layer::before {
+      content: '';
+      position: absolute; inset: -50%;
+      background: conic-gradient(from 0deg,#ff3eb530,#ffe60030,#00f0ff30,#bf00ff30,#ff6a0030,#39ff1430,#ff3eb530);
+      animation: spin 8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .blob {
+      position: absolute; border-radius: 50%;
+      filter: blur(60px); opacity: 0.35;
+      animation: blobFloat linear infinite;
+    }
+    .blob:nth-child(1){ width:400px;height:400px;background:var(--pink);  top:-100px;left:-100px; animation-duration:6s; }
+    .blob:nth-child(2){ width:300px;height:300px;background:var(--cyan);  top:60%;right:-80px;   animation-duration:7s;animation-delay:-2s; }
+    .blob:nth-child(3){ width:350px;height:350px;background:var(--yellow);bottom:-80px;left:30%; animation-duration:5s;animation-delay:-1s; }
+    .blob:nth-child(4){ width:250px;height:250px;background:var(--purple);top:30%;left:20%;      animation-duration:9s;animation-delay:-3s; }
+    @keyframes blobFloat {
+      0%,100%{ transform:scale(1) translate(0,0); }
+      33%    { transform:scale(1.15) translate(20px,-20px); }
+      66%    { transform:scale(0.9)  translate(-15px,15px); }
+    }
+
+    .emoji-bg { position:fixed;inset:0;z-index:1;pointer-events:none; }
+    .fly-emoji {
+      position:absolute;
+      animation:flyAcross linear infinite; opacity:0.25;
+    }
+    @keyframes flyAcross {
+      0%  { transform:translateX(-80px) rotate(0deg);   opacity:0; }
+      10% { opacity:0.25; }
+      90% { opacity:0.25; }
+      100%{ transform:translateX(110vw) rotate(720deg); opacity:0; }
+    }
+
+    #page {
+      position:relative; z-index:5; min-height:100vh;
+      display:flex; flex-direction:column;
+      align-items:center; justify-content:center;
+      gap:1.5rem; padding:2rem;
+    }
+
+    .warning-sign { font-size:3.5rem; animation:wobble 0.5s ease-in-out infinite alternate; }
+    @keyframes wobble {
+      from { transform:rotate(-8deg) scale(1); }
+      to   { transform:rotate(8deg)  scale(1.15); }
+    }
+
+    .top-text {
+      font-family:'Fredoka One',cursive;
+      font-size:clamp(1.6rem,5vw,3rem);
+      text-align:center;
+      animation:rainbowText 2s linear infinite;
+      text-shadow:0 0 20px currentColor;
+      letter-spacing:0.03em;
+    }
+    @keyframes rainbowText {
+      0%  { color:var(--pink); }
+      16% { color:var(--yellow); }
+      33% { color:var(--cyan); }
+      50% { color:var(--green); }
+      66% { color:var(--orange); }
+      83% { color:var(--purple); }
+      100%{ color:var(--pink); }
+    }
+
+    .sub-text {
+      font-size:1.1rem; color:rgba(255,255,255,0.65);
+      text-align:center; letter-spacing:0.05em;
+      animation:pulse 1.5s ease-in-out infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:0.5;} 50%{opacity:1;} }
+
+    #reveal-btn {
+      position:relative; background:none; border:none;
+      cursor:inherit; padding:0; outline:none;
+      animation:btnBounce 0.7s ease-in-out infinite alternate;
+    }
+    @keyframes btnBounce {
+      from { transform:scale(1) rotate(-1deg); }
+      to   { transform:scale(1.06) rotate(1deg); }
+    }
+
+    .btn-rainbow-border {
+      padding:4px; border-radius:20px;
+      background:linear-gradient(135deg,var(--pink),var(--yellow),var(--cyan),var(--green),var(--purple),var(--pink));
+      background-size:300% 300%;
+      animation:gradientShift 1.5s linear infinite;
+      box-shadow:0 0 30px var(--pink),0 0 60px var(--cyan),0 0 90px var(--purple);
+    }
+    @keyframes gradientShift {
+      0%  { background-position:0% 50%; }
+      50% { background-position:100% 50%; }
+      100%{ background-position:0% 50%; }
+    }
+
+    .btn-inner {
+      display:flex; align-items:center; gap:0.75rem;
+      padding:1.2rem 3rem; border-radius:16px; background:#111;
+      font-family:'Boogaloo',cursive; font-size:clamp(1.6rem,4vw,2.4rem);
+      color:white; letter-spacing:0.05em; white-space:nowrap;
+      transition:background 0.2s;
+    }
+    #reveal-btn:hover .btn-inner { background:#1a1a1a; }
+
+    .btn-emoji { display:inline-block; animation:spinEmoji 1s linear infinite; }
+    @keyframes spinEmoji { to { transform:rotate(360deg); } }
+
+    /* ── OVERLAY ── */
+    #overlay {
+      position:fixed; inset:0; z-index:20;
+      display:flex; align-items:center; justify-content:center;
+      padding:1.5rem; pointer-events:none; opacity:0;
+      transition:opacity 0.4s ease;
+    }
+    #overlay.show { opacity:1; pointer-events:auto; }
+
+    .overlay-bg {
+      position:absolute; inset:0;
+      background:rgba(0,0,0,0.88);
+      backdrop-filter:blur(8px);
+    }
+
+    #confetti-canvas {
+      position:absolute; inset:0;
+      pointer-events:none; z-index:2;
+    }
+
+    .card {
+      position:relative; z-index:3; width:100%; max-width:560px;
+      transform:scale(0.5) rotate(-10deg); opacity:0;
+      transition:transform 0.6s cubic-bezier(0.34,1.56,0.64,1), opacity 0.4s ease;
+    }
+    #overlay.show .card {
+      transform:scale(1) rotate(0deg); opacity:1; transition-delay:0.1s;
+    }
+
+    .card-rainbow {
+      padding:5px; border-radius:24px;
+      background:linear-gradient(135deg,var(--pink),var(--yellow),var(--cyan),var(--green),var(--purple));
+      background-size:300% 300%;
+      animation:gradientShift 1.5s linear infinite;
+      box-shadow:0 0 40px var(--pink),0 0 80px var(--cyan),0 20px 60px rgba(0,0,0,0.8);
+    }
+
+    .card-body { background:#111; border-radius:20px; overflow:hidden; }
+
+    .close-btn {
+      position:absolute; top:-14px; right:-14px; z-index:10;
+      width:40px; height:40px; border-radius:50%;
+      border:3px solid var(--yellow); background:#111;
+      color:var(--yellow); font-size:1.2rem; cursor:inherit;
+      display:flex; align-items:center; justify-content:center;
+      transition:transform 0.3s, background 0.2s;
+      box-shadow:0 0 15px var(--yellow);
+    }
+    .close-btn:hover {
+      background:var(--yellow); color:#111;
+      transform:rotate(180deg) scale(1.2);
+    }
+
+    .img-wrap {
+      position:relative; width:100%; aspect-ratio:4/3;
+      overflow:hidden; background:#1a1a1a;
+    }
+    .img-wrap img {
+      width:100%; height:100%; object-fit:cover; display:block;
+      animation:imgShake 0.5s ease 0.7s both;
+    }
+    @keyframes imgShake {
+      0%,100%{ transform:translateX(0); }
+      20%    { transform:translateX(-8px) rotate(-2deg); }
+      40%    { transform:translateX(8px)  rotate(2deg); }
+      60%    { transform:translateX(-5px) rotate(-1deg); }
+      80%    { transform:translateX(5px)  rotate(1deg); }
+    }
+    .img-wrap::after {
+      content:''; position:absolute; inset:0;
+      background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,0.15) 50%,transparent 70%);
+      animation:scanLight 2.5s ease-in-out infinite;
+    }
+    @keyframes scanLight {
+      0%  { transform:translateX(-100%) skewX(-15deg); }
+      100%{ transform:translateX(200%)  skewX(-15deg); }
+    }
+
+    .stamp {
+      position:absolute; top:12px; right:12px;
+      background:var(--red); color:white;
+      font-family:'Fredoka One',cursive; font-size:1rem;
+      padding:0.3rem 0.7rem; border-radius:6px;
+      transform:rotate(8deg); box-shadow:0 0 12px var(--red);
+      animation:stampPop 0.4s cubic-bezier(0.34,1.56,0.64,1) 0.9s both;
+    }
+    @keyframes stampPop {
+      from { transform:rotate(8deg) scale(0); }
+      to   { transform:rotate(8deg) scale(1); }
+    }
+
+    .card-text { padding:1.5rem 1.8rem 1.8rem; text-align:center; }
+
+    .roast-label {
+      font-size:0.7rem; letter-spacing:0.3em; text-transform:uppercase;
+      color:var(--cyan); margin-bottom:0.5rem;
+      text-shadow:0 0 10px var(--cyan); animation:pulse 1.5s infinite;
+    }
+
+    .roast-title {
+      font-family:'Fredoka One',cursive;
+      font-size:clamp(1.5rem,5vw,2.2rem); line-height:1.2;
+      margin-bottom:0.8rem;
+      animation:rainbowText 2s linear infinite;
+      text-shadow:0 0 15px currentColor;
+    }
+
+    .roast-body {
+      font-size:1rem; line-height:1.7;
+      color:rgba(255,255,255,0.85); font-weight:700;
+    }
+
+    .laugh-row {
+      margin-top:1rem; font-size:1.6rem; letter-spacing:0.2em;
+      animation:laughBounce 0.4s ease-in-out infinite alternate;
+    }
+    @keyframes laughBounce {
+      from { transform:translateY(0); }
+      to   { transform:translateY(-6px); }
+    }
+
+    @keyframes particlePop {
+      0%  { opacity:1; transform:translate(0,0) scale(1); }
+      100%{ opacity:0; transform:translate(var(--dx),var(--dy)) scale(0); }
+    }
+    @keyframes screenShake {
+      0%,100%{ transform:translate(0,0); }
+      10%    { transform:translate(-6px,4px); }
+      20%    { transform:translate(6px,-4px); }
+      30%    { transform:translate(-4px,6px); }
+      40%    { transform:translate(4px,-2px); }
+      50%    { transform:translate(-3px,3px); }
+      60%    { transform:translate(3px,-3px); }
+      70%    { transform:translate(-2px,2px); }
+      80%    { transform:translate(2px,-2px); }
+      90%    { transform:translate(-1px,1px); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="bg-layer">
+    <div class="blob"></div><div class="blob"></div>
+    <div class="blob"></div><div class="blob"></div>
+  </div>
+  <div class="emoji-bg" id="emoji-bg"></div>
+
+  <div id="page">
+    <div class="warning-sign">🚨</div>
+    <h1 class="top-text">⚠️ DO NOT CLICK THIS BUTTON ⚠️</h1>
+    <p class="sub-text">seriously... don't do it 👀</p>
+
+    <button id="reveal-btn" aria-label="Reveal the surprise">
+      <div class="btn-rainbow-border">
+        <div class="btn-inner">
+          <span class="btn-emoji">💀</span>
+          CLICK ME
+          <span class="btn-emoji" style="animation-direction:reverse">💀</span>
+        </div>
+      </div>
+    </button>
+
+    <p class="sub-text" style="margin-top:0.5rem">you were warned 😈</p>
+  </div>
+
+  <div id="overlay">
+    <div class="overlay-bg"></div>
+    <canvas id="confetti-canvas"></canvas>
+
+    <div class="card">
+      <div class="card-rainbow">
+        <div class="card-body">
+          <button class="close-btn" id="close-btn" aria-label="Close">✕</button>
+
+          <div class="img-wrap">
+            <!-- ✏️ REPLACE src WITH YOUR FRIEND'S PHOTO PATH e.g. src="friend.jpg" -->
+            <img
+              src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Gatto_europeo4.jpg/1200px-Gatto_europeo4.jpg"
+              alt="Your friend"
+            />
+            <div class="stamp">EXPOSED 🔥</div>
+          </div>
+
+          <div class="card-text">
+            <p class="roast-label">🚨 breaking news 🚨</p>
+            <!-- ✏️ CHANGE THE TITLE AND COMMENT BELOW -->
+            <h2 class="roast-title">YOUR FRIEND'S NAME HERE 😂</h2>
+            <p class="roast-body">
+              Add your teasing comment here! Make it spicy 🌶️<br/>
+              Your friend is going to love this... or not 😏
+            </p>
+            <div class="laugh-row">😂 🤣 💀 🤣 😂</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Flying emojis
+    const emojiPool = ['😂','💀','🔥','😈','👀','🤣','💅','🫵','😭','🤡','💥','🎉'];
+    const emojiBg = document.getElementById('emoji-bg');
+    for (let i = 0; i < 18; i++) {
+      const el = document.createElement('div');
+      el.className = 'fly-emoji';
+      el.textContent = emojiPool[Math.floor(Math.random() * emojiPool.length)];
+      el.style.cssText = `
+        top:${Math.random()*100}%; left:-80px;
+        animation-duration:${5+Math.random()*8}s;
+        animation-delay:${-Math.random()*12}s;
+        font-size:${1.2+Math.random()*2}rem;
+      `;
+      emojiBg.appendChild(el);
+    }
+
+    // Confetti
+    const canvas = document.getElementById('confetti-canvas');
+    const ctx = canvas.getContext('2d');
+    let pieces = [], animFrame;
+    function resize(){ canvas.width=innerWidth; canvas.height=innerHeight; }
+    resize(); window.addEventListener('resize', resize);
+    const COLS = ['#ff3eb5','#ffe600','#00f0ff','#ff6a00','#39ff14','#bf00ff','#ff2020','#fff'];
+
+    function launchConfetti() {
+      pieces = [];
+      for (let i=0;i<200;i++) pieces.push({
+        x:Math.random()*canvas.width, y:-20-Math.random()*200,
+        w:8+Math.random()*10, h:5+Math.random()*6,
+        color:COLS[Math.floor(Math.random()*COLS.length)],
+        vx:(Math.random()-0.5)*6, vy:3+Math.random()*5,
+        rot:Math.random()*360, rotV:(Math.random()-0.5)*8, alpha:1
+      });
+      tick();
+    }
+    function tick(){
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      let alive=false;
+      pieces.forEach(p=>{
+        p.x+=p.vx; p.y+=p.vy; p.vy+=0.15; p.vx*=0.99; p.rot+=p.rotV;
+        if(p.y>canvas.height+30) p.alpha-=0.02;
+        else alive=true;
+        ctx.save();
+        ctx.globalAlpha=Math.max(0,p.alpha);
+        ctx.translate(p.x,p.y); ctx.rotate(p.rot*Math.PI/180);
+        ctx.fillStyle=p.color;
+        ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h);
+        ctx.restore();
+      });
+      if(pieces.some(p=>p.alpha>0)) animFrame=requestAnimationFrame(tick);
+    }
+
+    // Particle burst
+    function burst(x,y){
+      for(let i=0;i<30;i++){
+        const p=document.createElement('div');
+        const angle=(i/30)*Math.PI*2, dist=80+Math.random()*120, size=6+Math.random()*8;
+        p.style.cssText=`
+          position:fixed;z-index:50;
+          width:${size}px;height:${size}px;border-radius:50%;
+          background:${COLS[Math.floor(Math.random()*COLS.length)]};
+          left:${x}px;top:${y}px;pointer-events:none;
+          animation:particlePop 0.8s ease-out forwards;
+          --dx:${Math.cos(angle)*dist}px;--dy:${Math.sin(angle)*dist}px;
+        `;
+        document.body.appendChild(p);
+        p.addEventListener('animationend',()=>p.remove());
+      }
+    }
+
+    // Screen shake
+    function shake(){
+      document.body.style.animation='screenShake 0.5s ease';
+      setTimeout(()=>document.body.style.animation='',500);
+    }
+
+    // Controls
+    const btn=document.getElementById('reveal-btn');
+    const overlay=document.getElementById('overlay');
+    const closeBtn=document.getElementById('close-btn');
+
+    btn.addEventListener('click',e=>{
+      const r=btn.getBoundingClientRect();
+      burst(r.left+r.width/2, r.top+r.height/2);
+      shake();
+      setTimeout(()=>{ overlay.classList.add('show'); launchConfetti(); },150);
+    });
+
+    function close(){
+      cancelAnimationFrame(animFrame);
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      overlay.classList.remove('show');
+    }
+    closeBtn.addEventListener('click',close);
+    overlay.addEventListener('click',e=>{ if(e.target===overlay||e.target.classList.contains('overlay-bg')) close(); });
+    document.addEventListener('keydown',e=>{ if(e.key==='Escape') close(); });
+  </script>
+</body>
+</html>
